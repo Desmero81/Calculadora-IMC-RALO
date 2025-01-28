@@ -1,6 +1,7 @@
-let numeroDado = 0;
-let contador = 1;
-let resultado = 0;
+let estatura = 0;
+let peso = 0;
+let iMc = 0;
+let iMc2 = 0;
 
 function asignarTextoElemento(elemento, texto) {
     let elementoHTML = document.querySelector(elemento);
@@ -9,38 +10,60 @@ function asignarTextoElemento(elemento, texto) {
 }
 
 function condicionesIniciales() {
-    asignarTextoElemento('h1','Tabla de multiplicar');
-    asignarTextoElemento('p','Ingresa cualquier número:');
+    asignarTextoElemento('h1','Calculadora de IMC');
+    asignarTextoElemento('p','Ingresa tu estatura en cm y tu peso en kg');
+    document.getElementById('estatura').removeAttribute('disabled');
     document.querySelector('#reiniciar').setAttribute('disabled','true');
-    document.getElementById('valorUsuario').removeAttribute('disabled'); // Habilitar el input del usuario
+   
 }
 
-function numeroUsuario() {
+function estaturaUsuario() {
     
-    numeroDado = parseInt(document.getElementById('valorUsuario').value);
-    console.log(typeof(numeroDado));
-    console.log(`"El número de usuario es: ${numeroDado}"`);
-    asignarTextoElemento('p',`El número de usuario es: ${numeroDado}`);
+    let estatura1 = parseInt(document.getElementById('valorUsuario').value);
+    
+    console.log(`"La estatura del usuario es igual a ${estatura1} cm"`);
+
+    estatura = estatura1 / 100;
+
+    console.log(estatura);
+    
+    document.querySelector('#estatura').setAttribute('disabled','true');
+
     limpiarCaja();
-    calcularTabla();
-    return (numeroDado);
+
+    document.getElementById('peso').removeAttribute('disabled');
+
+    return (estatura);
 }
 
-function calcularTabla() {
-    while (contador < 11){    
-        resultado = numeroDado * contador;
-        console.log(`${numeroDado} por ${contador} es igual a ${resultado}`);
-        contador++; 
-    }
+function pesoUsuario() {
+    
+    let peso1 = parseInt(document.getElementById('valorUsuario').value);
+    
+    console.log(`"El peso del usuario es igual a ${peso1} kg"`);
+
+    peso = peso1;
+
+    console.log(peso);
+
+    document.querySelector('#peso').setAttribute('disabled','true');
+
+    limpiarCaja();
+    calcularIMC();
+
+    return (peso);
+}
+
+function calcularIMC() {
+    iMc = parseFloat(peso / (estatura ** 2));
+    let iMc2 = iMc.toFixed(4);
+    console.log(iMc2);
+    asignarTextoElemento('p',`Tu IMC es igual a: ${iMc2}`);
     document.getElementById('reiniciar').removeAttribute('disabled');
-    document.getElementById('valorUsuario').setAttribute('disabled', 'true');
-    return(resultado);
+    return(iMc);
 }
 
 function reiniciarCalculo() {
-    numeroDado = 0;
-    contador = 1;
-    resultado = 0;
     condicionesIniciales();
 }
 
@@ -49,41 +72,3 @@ function limpiarCaja() {
 }
 
 condicionesIniciales();
-
-/*
-function inicio() {
-    alert('¡Hola Mundo!');
-    console.log('¡Hola Mundo!');
-    let nombre = prompt('Escribe tu nombre:');
-    alert(`¡Hola ${nombre}!`);
-    let valorUno = parseInt(prompt('Escribe un número:'));
-    console.log(typeof(valorUno));
-    resultadoUno = valorUno * 2;
-    alert(`${nombre}, el doble de ${valorUno} es ${resultadoUno}.`);
-    let valorDos = parseInt(prompt(`${nombre}, vamos a encontrar el promedio de tres números cualesquiera. Escribe el primer número:`));
-    console.log(typeof(valorDos));
-    let valorTres = parseInt(prompt(`${nombre}, escribe el segundo número:`));
-    console.log(typeof(valorTres));
-    let valorCuatro = parseInt(prompt(`${nombre}, escribe el tercer número:`));
-    console.log(typeof(valorCuatro));
-    resultadoDos = (valorDos + valorTres + valorCuatro) / 3;
-    alert(`${nombre}, el promedio de los números: ${valorDos}, ${valorTres} y ${valorCuatro} es igual a ${resultadoDos}.`);
-    let valorCinco = parseInt(prompt(`${nombre}, vamos a encontrar el mayor de dos números cualesquiera. Escribe el primer número:`));
-    console.log(typeof(valorCinco));
-    let valorSeis = parseInt(prompt(`${nombre}, escribe el segundo número:`));
-    console.log(typeof(valorSeis));
-    if (valorCinco > valorSeis) {
-        alert(`${nombre}, el número ${valorCinco} es mayor a ${valorSeis}.`);
-    } else if (valorCinco < valorSeis) {
-        alert(`${nombre}, el número ${valorSeis} es mayor a ${valorCinco}.`);
-    } else {
-        alert(`${nombre}, ambos números son iguales.`);
-    }
-    let valorSiete = parseInt(prompt(`${nombre}, escribe cualquier número:`));
-    console.log(typeof(valorSiete));
-    resultadoTres = valorSiete ** 2;
-    alert(`${nombre}, el número ${valorSiete} multiplicado por si mismo es igual a ${resultadoTres}.`);
-    return;
-
-    <<button onclick="inicio();" class="container__boton">Nombre</button> <<<<<COLOCAR EN INDEX.HTML PARA EJECUTAR
-} */
